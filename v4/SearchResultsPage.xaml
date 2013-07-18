@@ -1,0 +1,66 @@
+﻿<Page
+    x:Name="pageRoot"
+    x:Class="DrugsX.SearchResultsPage"
+    DataContext="{Binding DefaultViewModel, RelativeSource={RelativeSource Self}}"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:DrugsX"
+    xmlns:common="using:DrugsX.Common"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:ExtensionType="Search">
+
+    <Page.Resources>
+        <CollectionViewSource x:Name="resultsViewSource" Source="{Binding Results}"/>
+        <common:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <!-- TODO: Update the following string to be the name of your app -->
+        <x:String x:Key="AppName">Drugs</x:String>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid x:Name="resultsPanel" Grid.Row="1">
+
+            <Grid x:Name="typicalPanel">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+
+                <GridView
+                    x:Name="resultsGridView"
+                    AutomationProperties.AutomationId="ResultsGridView"
+                    AutomationProperties.Name="Search Results"
+                    TabIndex="1"
+                    Grid.Row="1"
+                    Margin="0,-238,0,0"
+                    Padding="110,240,110,46"
+                    SelectionMode="None"
+                    IsSwipeEnabled="false"
+                    IsItemClickEnabled="True"
+                    ItemsSource="{Binding Source={StaticResource resultsViewSource}}"
+                    ItemTemplate="{StaticResource StandardSmallIcon300x70ItemTemplate}">
+                    
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="Control">
+                            <Setter Property="Height" Value="70"/>
+                            <Setter Property="Margin" Value="0,0,38,8"/>
+                       </Style>
+                    </GridView.ItemContainerStyle>
+                </GridView>
+            </Grid>
+
+        </Grid>
+
+        <!-- Back button, page title and subtitles-->
+
+
+
+
+    </Grid>
+</Page>

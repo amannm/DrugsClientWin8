@@ -1,0 +1,78 @@
+﻿<Page
+    x:Class="Drugs2.AttributesPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Drugs2"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DataContext="{d:DesignInstance local:SampleViewModel, IsDesignTimeCreatable=True}">
+    <Page.Resources>
+        <local:EntityTypeConverter x:Name="EntityTypeConverter"/>
+    </Page.Resources>
+
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="140"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid x:Name="pageHeader" Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button x:Name="backButton" 
+                    Click="backButton_Click" 
+                    IsEnabled="{Binding Frame.CanGoBack, ElementName=pageRoot}" 
+                    Style="{StaticResource BackButtonStyle}"/>
+            <StackPanel Grid.Column="1" >
+                <TextBlock Text="{Binding CurrentConcept.Name}" IsHitTestVisible="false" Style="{StaticResource PageHeaderTextStyle}" Margin="0,40,0,0"/>
+                <TextBlock Text="{Binding CurrentConcept.Type, Converter={StaticResource EntityTypeConverter}}" IsHitTestVisible="false">
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource PageSubheaderTextStyle}">
+                            <Setter Property="Foreground" Value="Gray"/>
+                            <Setter Property="Margin" Value="0,10,0,0" />
+                            <Setter Property="TextAlignment" Value="Left"/>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+        <GridView Grid.Row="1"
+                  SelectionMode="None"  
+                IsItemClickEnabled="False" 
+                ItemsSource="{Binding AttributeGroups}">
+            <GridView.Style>
+                <Style TargetType="GridView">
+                    <Setter Property="Margin" Value="140,0,0,50"/>
+                </Style>
+            </GridView.Style>
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <GridView 
+                        SelectionMode="None"
+                        ItemsSource="{Binding Attributes}">
+                        <GridView.Header>
+                            <TextBlock Text="{Binding Description}" Style="{StaticResource BasicTextStyle}" Margin="0"/>
+                        </GridView.Header>
+                        <GridView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}" IsHitTestVisible="False" Height="50">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock" BasedOn="{StaticResource CaptionTextStyle}">
+                                            <Setter Property="Foreground" Value="Gray"/>
+                                            <Setter Property="Margin" Value="0" />
+                                            <Setter Property="Padding" Value="0" />
+                                            <Setter Property="TextAlignment" Value="Left"/>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridView.ItemTemplate>
+                    </GridView>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>
+    </Grid>
+</Page>
